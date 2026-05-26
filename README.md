@@ -455,4 +455,10 @@ AI assistance was used during the early design phase for:
 - Redis idempotency approaches
 - observability and resilience patterns
 
+
+## Audit & Event Tracking
+- Payment lifecycle events are stored for traceability and debugging.
+- Each payment transition is persisted as an audit event.
+- Event tracking helps support observability and operational troubleshooting.
+
 *End of Documentation*
