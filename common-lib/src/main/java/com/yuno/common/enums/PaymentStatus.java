@@ -1,0 +1,5 @@
+package com.yuno.common.enums;
+
+public enum PaymentStatus {
+    INITIATED, PROCESSING, ROUTING, PROVIDER_CALLED, SUCCESS, FAILED, RETRYING, FAILOVER_TRIGGERED, PERMANENTLY_FAILED
+}

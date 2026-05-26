@@ -1,0 +1,50 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: provider-service
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+
+providers:
+  provider-a:
+    success-rate: 0.85
+    min-latency-ms: 100
+    max-latency-ms: 300
+  provider-b:
+    success-rate: 0.80
+    min-latency-ms: 50
+    max-latency-ms: 200
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      providerCircuitBreaker:
+        sliding-window-size: 10
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 30s
+        permitted-number-of-calls-in-half-open-state: 3
+  retry:
+    instances:
+      providerRetry:
+        max-attempts: 3
+        wait-duration: 100ms
+        retry-exceptions:
+          - com.yuno.common.exception.ProviderException
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level [%X{correlationId}] %logger{36} - %msg%n"
+  level:
+    com.yuno: DEBUG

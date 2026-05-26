@@ -1,0 +1,78 @@
+{
+  "info": {
+    "name": "Yuno Payment Platform",
+    "description": "Complete API collection for Yuno Payment Orchestration Platform",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {"key": "BASE_URL", "value": "http://localhost:8080"},
+    {"key": "API_KEY", "value": "test-api-key-001"}
+  ],
+  "item": [
+    {
+      "name": "Create CARD Payment",
+      "request": {
+        "method": "POST",
+        "header": [
+          {"key": "Content-Type", "value": "application/json"},
+          {"key": "X-API-Key", "value": "{{API_KEY}}"},
+          {"key": "X-Idempotency-Key", "value": "{{$guid}}"},
+          {"key": "X-Correlation-Id", "value": "{{$guid}}"}
+        ],
+        "url": "{{BASE_URL}}/api/v1/payments",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"amount\": 500.00,\n  \"currency\": \"INR\",\n  \"paymentMethod\": \"CARD\",\n  \"customerId\": \"cust_123\",\n  \"metadata\": {\"orderId\": \"order_456\"}\n}"
+        }
+      }
+    },
+    {
+      "name": "Create UPI Payment",
+      "request": {
+        "method": "POST",
+        "header": [
+          {"key": "Content-Type", "value": "application/json"},
+          {"key": "X-API-Key", "value": "{{API_KEY}}"},
+          {"key": "X-Idempotency-Key", "value": "{{$guid}}"},
+          {"key": "X-Correlation-Id", "value": "{{$guid}}"}
+        ],
+        "url": "{{BASE_URL}}/api/v1/payments",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"amount\": 250.00,\n  \"currency\": \"INR\",\n  \"paymentMethod\": \"UPI\",\n  \"customerId\": \"cust_456\",\n  \"metadata\": {\"upiId\": \"user@paytm\"}\n}"
+        }
+      }
+    },
+    {
+      "name": "Fetch Payment",
+      "request": {
+        "method": "GET",
+        "header": [
+          {"key": "X-API-Key", "value": "{{API_KEY}}"}
+        ],
+        "url": "{{BASE_URL}}/api/v1/payments/{{paymentId}}"
+      }
+    },
+    {
+      "name": "Provider Health",
+      "request": {
+        "method": "GET",
+        "url": "http://localhost:8082/api/v1/providers/health"
+      }
+    },
+    {
+      "name": "Payment Analytics",
+      "request": {
+        "method": "GET",
+        "url": "http://localhost:8081/api/v1/internal/analytics/payments"
+      }
+    },
+    {
+      "name": "Gateway Health",
+      "request": {
+        "method": "GET",
+        "url": "{{BASE_URL}}/actuator/health"
+      }
+    }
+  ]
+}
